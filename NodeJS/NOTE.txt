@@ -1,0 +1,5 @@
+The Node.js is a part of the Server, not the client.
+
+As such, it must be run prior to the HTML page being run, or there will be no way for the HTML page to communicate with the Mongo DataBase.
+
+The Node.js assumes a url/port of: 127.0.0.1:27017
