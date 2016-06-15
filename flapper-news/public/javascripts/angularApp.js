@@ -51,12 +51,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/posts/{id}'
             , templateUrl: '/posts.html'
             , controller: 'PostsCtrl'
-        , resolve: {
+            , resolve: {
                 post: ['$stateParams', 'posts', function ($stateParams, posts) {
                     return posts.get($stateParams.id);
-                }]
+                    }]
             }
-            
+
         });
 
     $urlRouterProvider.otherwise('home');
@@ -65,30 +65,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 app.controller('MainCtrl', ['$scope', 'posts', function ($scope, posts) {
     $scope.test = 'Hello world!';
     $scope.posts = posts.posts;
-
+    $scope.incrementUpvotes = function (post) {
+        posts.upvote(post);
+    };
     $scope.addPost = function () {
         if (!$scope.title || $scope.title === '') {
             return;
         }
-        $scope.posts.push({
+        posts.create({
             title: $scope.title
             , link: $scope.link
-            , upvotes: 0
-            , comments: [
-                {
-                    author: 'Joe'
-                    , body: 'Cool post!'
-                    , upvotes: 0
-                    }
-
-                
-                , {
-                    author: 'Bob'
-                    , body: 'Great idea but everything is wrong!'
-                    , upvotes: 0
-                    }
-  ]
-        });
+        , });
         $scope.title = '';
         $scope.link = '';
     };
